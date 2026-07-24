@@ -1,33 +1,35 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Terminal, MessageCircle, Globe, Camera, ArrowRight, ArrowUpCircle, Mail, MessageSquare } from 'lucide-react';
+import { Mail, ArrowRight, ArrowUpCircle, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const socials = [
-  { icon: '/WebsiteIconBar.png', href: 'https://omnikonhub.com', label: 'Website' },
+  { href: 'https://omnikonhub.com', label: 'Website' },
   { icon: Mail, href: 'mailto:contact@omnikonhub.com', label: 'Email' },
-  { icon: 'https://img.icons8.com/glyph-neue/64/FFFFFF/github.png', href: 'https://github.com/Omnikon-Org', label: 'GitHub' },
-  { icon: 'https://img.icons8.com/ios-filled/50/FFFFFF/discord-logo.png', href: 'https://discord.gg/yWtjK2Tb8T', label: 'Discord' },
-  { icon: 'https://img.icons8.com/ios-filled/50/FFFFFF/linkedin.png', href: 'https://www.linkedin.com/company/omnikon-org', label: 'LinkedIn' },
-  { icon: 'https://img.icons8.com/ios/50/FFFFFF/twitterx--v2.png', href: 'https://x.com/OmnikonOrg', label: 'X (Twitter)' },
-  { icon: 'https://img.icons8.com/windows/32/FFFFFF/instagram-new.png', href: 'https://www.instagram.com/omnikonorg', label: 'Instagram' },
+  { href: 'https://github.com/Omnikon-Org', label: 'GitHub' },
+  { href: 'https://discord.gg/yWtjK2Tb8T', label: 'Discord' },
+  { href: 'https://www.linkedin.com/company/omnikon-org', label: 'LinkedIn' },
+  { href: 'https://x.com/OmnikonOrg', label: 'X (Twitter)' },
+  { href: 'https://www.instagram.com/omnikonorg', label: 'Instagram' },
 ];
 
 const links = [
-  { title: 'Quick Links', items: [
+  { title: 'Navigation', items: [
     { name: 'Home', href: '/' }, 
-    { name: 'About', href: '/#about' }, 
-    { name: 'Tracks', href: '/#tracks' }, 
-    { name: 'Timeline', href: '/#timeline' }, 
-    { name: 'Prizes', href: '/#prizes' }
+    { name: 'About Ecosystem', href: '/about' }, 
+    { name: 'Innovation Tracks', href: '/tracks' }, 
+    { name: 'Prizes & Judging', href: '/prizes' }, 
+    { name: 'Schedule & Timeline', href: '/schedule' }
   ] },
   { title: 'Resources', items: [
-    { name: 'Rulebook', href: '/rulebook' }
+    { name: 'Official Rulebook', href: '/rulebook' },
+    { name: 'Community & FAQ', href: '/community' }
   ] },
   { title: 'Contact', items: [
     { name: 'contact@omnikonhub.com', href: 'mailto:contact@omnikonhub.com' }, 
-    { name: 'Sponsorship', href: '/#partner' }
+    { name: 'Sponsorship & Partnerships', href: '/about' }
   ] },
 ];
 
@@ -37,15 +39,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden pt-24 pb-10 border-t border-[#ff1e1e]/20">
-      {/* Cinematic Ambient Glow */}
+    <footer className="relative overflow-hidden pt-24 pb-10 border-t border-[#ff1e1e]/20 bg-[#050505]">
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] pointer-events-none opacity-[0.15] mix-blend-screen" style={{ background: 'radial-gradient(ellipse at bottom, #ff1e1e 0%, transparent 60%)' }} />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,30,30,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,30,30,0.02)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
           <div className="lg:col-span-2">
-            <a href="#home" className="flex items-center gap-4 group inline-flex mb-8">
+            <Link href="/" className="flex items-center gap-4 group inline-flex mb-8">
               <span className="relative h-16 w-16 overflow-hidden rounded-2xl border border-[#ff1e1e]/30 bg-[#151515] group-hover:border-[#ff1e1e] group-hover:shadow-[0_0_20px_rgba(255,30,30,0.4)] transition-all duration-300">
                 <Image src="/LogoOmnikon.jpeg" alt="Omnikon logo" fill sizes="64px" className="object-cover" />
               </span>
@@ -53,26 +54,22 @@ export default function Footer() {
                 <span className="block text-3xl font-black uppercase tracking-widest text-white group-hover:text-[#ff1e1e] group-hover:drop-shadow-[0_0_10px_rgba(255,30,30,0.8)] transition-all duration-300">Omnikon</span>
                 <span className="code-font block text-xs mt-1 uppercase tracking-[0.3em] text-[#bdbdbd]">National Hackathon</span>
               </span>
-            </a>
+            </Link>
             <p className="text-[#bdbdbd] mb-8 max-w-sm leading-relaxed text-lg">
-              The premier build arena for developers who want to push boundaries, craft premium products, and shape the future of technology in less than 1 month.
+              The premier build arena for developers who want to push boundaries, craft premium products, and shape the future of technology.
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-3">
               {socials.map((social, index) => (
                 <motion.a
                   key={index}
                   href={social.href}
-                  target="_blank" rel="noopener noreferrer"
+                  target="_blank" 
+                  rel="noopener noreferrer"
                   aria-label={social.label}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="group flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[#151515] text-[#bdbdbd] transition-colors hover:text-[#ff1e1e] hover:border-[#ff1e1e]/50 hover:bg-[#ff1e1e]/10 hover:shadow-[0_10px_20px_rgba(255,30,30,0.2)]"
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="code-font px-3 py-1.5 rounded-lg border border-white/10 bg-[#151515] text-xs text-[#bdbdbd] transition-colors hover:text-[#ff1e1e] hover:border-[#ff1e1e]/50 hover:bg-[#ff1e1e]/10"
                 >
-                  {typeof social.icon === 'string' ? (
-                    <img src={social.icon} alt={social.label} className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
-                  ) : (
-                    <social.icon size={20} />
-                  )}
+                  {social.label}
                 </motion.a>
               ))}
             </div>
@@ -90,9 +87,9 @@ export default function Footer() {
               <ul className="grid gap-5">
                 {col.items.map((item) => (
                   <li key={item.name}>
-                    <a href={item.href} className="text-[#bdbdbd] hover:text-[#ff1e1e] transition-all hover:translate-x-2 inline-block text-[15px] tracking-wide">
+                    <Link href={item.href} className="text-[#bdbdbd] hover:text-[#ff1e1e] transition-all hover:translate-x-2 inline-block text-[15px] tracking-wide">
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -100,14 +97,12 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Discord CTA Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="premium-card p-10 mb-16 flex flex-col lg:flex-row items-center justify-between gap-8 border-[#ff1e1e]/30 bg-[#0a0a0a]/80 backdrop-blur-xl group relative overflow-hidden shadow-[0_0_40px_rgba(255,30,30,0.05)]"
         >
-          {/* Animated gradient sweep */}
           <motion.div 
             className="absolute inset-0 bg-gradient-to-r from-transparent via-[#ff1e1e]/10 to-transparent -translate-x-full skew-x-[-20deg]"
             animate={{ translateX: ['-200%', '200%'] }}
@@ -120,7 +115,7 @@ export default function Footer() {
               Stay Connected
             </h4>
             <p className="text-[#bdbdbd] text-lg mb-6 max-w-2xl">
-              Join the official Omnikon Discord server to receive:
+              Join the official Omnikon Discord server to receive event updates, mentorship, and team announcements.
             </p>
             <ul className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-[#bdbdbd]">
               <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-[#ff1e1e] rounded-full" /> Event announcements</li>
@@ -149,7 +144,6 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Animated Divider */}
         <div className="h-[2px] w-full bg-[#151515] mb-8 relative overflow-hidden rounded-full">
           <motion.div 
             className="absolute top-0 left-0 h-full w-1/3 bg-gradient-to-r from-transparent via-[#ff1e1e] to-transparent shadow-[0_0_10px_#ff1e1e]"
@@ -160,7 +154,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="code-font text-xs text-[#bdbdbd] uppercase tracking-widest text-center md:text-left">
-            © 2026 Omnikon Hackathon. All rights reserved.
+            © 2026 Omnikon Hackathon. Build The Impossible.
           </div>
           
           <motion.button

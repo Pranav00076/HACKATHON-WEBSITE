@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 import { motion, Variants, useMotionValue, useTransform } from 'framer-motion';
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import TextReveal from './animations/TextReveal';
+import { HACKATHON_CONFIG } from '@/data/hackathon';
 
-const targetDate = new Date('2026-08-15T23:59:59+05:30');
+const targetDate = new Date(HACKATHON_CONFIG.dates.targetIso);
 
 function Countdown() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -35,7 +37,6 @@ function Countdown() {
           whileHover={{ scale: 1.05, y: -5 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-          {/* Animated background gradient */}
           <div className="absolute inset-0 bg-gradient-to-tr from-[#ff1e1e]/0 via-[#ff1e1e]/5 to-[#ff1e1e]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
           <div className="relative z-10 code-font text-2xl sm:text-4xl font-bold text-white group-hover:text-[#ff1e1e] group-hover:drop-shadow-[0_0_10px_rgba(255,30,30,0.8)] transition-all duration-300">
@@ -50,13 +51,6 @@ function Countdown() {
   );
 }
 
-const stats = [
-  { label: 'Colleges', value: '50+' },
-  { label: 'Prize pool', value: '₹10K' },
-  { label: 'Participants', value: '500+' },
-  { label: 'Tracks', value: '4' },
-];
-
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -70,8 +64,6 @@ const itemVariants: Variants = {
   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 };
 
-
-
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
   const mouseX = useMotionValue(0);
@@ -80,7 +72,6 @@ export default function Hero() {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
-      // Normalize mouse position between -1 and 1
       mouseX.set((e.clientX / innerWidth) * 2 - 1);
       mouseY.set((e.clientY / innerHeight) * 2 - 1);
     };
@@ -96,7 +87,6 @@ export default function Hero() {
 
   return (
     <section ref={containerRef} id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pb-20 pt-32 sm:px-8">
-      {/* Background Orbs with Parallax */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
           style={{ x: parallaxX1, y: parallaxY1 }}
@@ -110,7 +100,6 @@ export default function Hero() {
           animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         />
-        {/* Floating code snippets (decorative) */}
         <motion.div 
           style={{ x: parallaxX1, y: parallaxY2 }}
           className="absolute left-[15%] bottom-[30%] opacity-[0.03] code-font text-xs"
@@ -133,7 +122,7 @@ export default function Hero() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff1e1e] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff1e1e]"></span>
           </span>
-          National Tech Hackathon 2026
+          {HACKATHON_CONFIG.subTagline}
         </motion.div>
         
         <h1 className="text-[clamp(3.5rem,8vw,6.5rem)] font-black uppercase leading-[0.9] tracking-tight mb-8 perspective-[1000px]">
@@ -142,28 +131,29 @@ export default function Hero() {
         </h1>
         
         <motion.p variants={itemVariants} className="max-w-2xl text-xl sm:text-2xl leading-relaxed text-white font-medium drop-shadow-md mb-10">
-          Turn less than 1 month of coding into a product that matters. If you&apos;re a builder, designer, or creator with ideas, this is your arena.
+          {HACKATHON_CONFIG.description}
         </motion.p>
 
         <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-4 text-sm text-[#bdbdbd] mb-12">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#ff1e1e]/20 bg-[#151515] px-5 py-2.5 shadow-[0_0_15px_rgba(255,30,30,0.1)] hover:border-[#ff1e1e]/50 hover:shadow-[0_0_20px_rgba(255,30,30,0.3)] transition-all cursor-default">
             <CalendarDays size={18} className="text-[#ff1e1e]" />
-            Aug 15 - Sep 5, 2026
+            {HACKATHON_CONFIG.dates.display}
           </span>
           <span className="inline-flex items-center gap-2 rounded-full border border-[#ff1e1e]/20 bg-[#151515] px-5 py-2.5 shadow-[0_0_15px_rgba(255,30,30,0.1)] hover:border-[#ff1e1e]/50 hover:shadow-[0_0_20px_rgba(255,30,30,0.3)] transition-all cursor-default">
             <MapPin size={18} className="text-[#ff1e1e]" />
-            Online on Unstop
+            {HACKATHON_CONFIG.location}
           </span>
         </motion.div>
 
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-5 mb-16 relative">
           <motion.a 
-            href="https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716" target="_blank" rel="noopener noreferrer"
+            href={HACKATHON_CONFIG.registrationUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
             className="magnetic-button primary-button w-full sm:w-auto min-w-[200px] group overflow-hidden"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {/* Button Shine effect */}
             <motion.div 
               className="absolute inset-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg]"
               animate={{ translateX: ['-150%', '150%'] }}
@@ -181,18 +171,16 @@ export default function Hero() {
               </motion.span>
             </span>
           </motion.a>
-          <motion.a 
+          <Link 
             href="/rulebook" 
             className="magnetic-button secondary-button w-full sm:w-auto min-w-[200px]"
-            whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 30, 30, 0.1)' }}
-            whileTap={{ scale: 0.95 }}
           >
             View Rulebook
-          </motion.a>
+          </Link>
         </motion.div>
 
         <motion.div variants={itemVariants} className="w-full max-w-3xl border-t border-[#ff1e1e]/20 pt-10 mt-6 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat, idx) => (
+          {HACKATHON_CONFIG.stats.map((stat, idx) => (
             <motion.div 
               key={stat.label} 
               className={`border-[#ff1e1e]/10 ${idx !== 0 ? 'md:border-l md:pl-6' : ''}`}
@@ -208,7 +196,6 @@ export default function Hero() {
           <Countdown />
         </motion.div>
 
-        {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

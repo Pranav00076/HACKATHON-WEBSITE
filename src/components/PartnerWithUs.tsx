@@ -11,7 +11,7 @@ const stats = [
   { icon: CalendarDays, value: 1, prefix: '', suffix: ' MONTH', label: 'BUILD CYCLE' },
 ];
 
-function AnimatedStat({ stat, index }: { stat: typeof stats[0], index: number }) {
+function AnimatedStat({ stat, index }: { stat: typeof stats[0]; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const [count, setCount] = useState(0);
@@ -42,7 +42,6 @@ function AnimatedStat({ stat, index }: { stat: typeof stats[0], index: number })
       }}
       className="relative group p-6 flex flex-col items-center justify-center text-center rounded-2xl transition-all duration-300 hover:bg-[#0c0c0c] hover:shadow-[0_15px_30px_rgba(255,30,30,0.05)] border border-transparent hover:border-[#ff1e1e]/10"
     >
-      {/* Soft red glow briefly appears after counting finishes */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={isInView ? { opacity: [0, 1, 0], scale: [0.8, 1.2, 1] } : {}}
@@ -50,10 +49,8 @@ function AnimatedStat({ stat, index }: { stat: typeof stats[0], index: number })
         className="absolute inset-0 bg-[#ff1e1e]/15 blur-2xl rounded-full z-0 pointer-events-none"
       />
 
-      {/* Hover red glow */}
       <div className="absolute inset-0 bg-[#ff1e1e]/0 group-hover:bg-[#ff1e1e]/5 blur-xl rounded-full z-0 pointer-events-none transition-colors duration-300" />
 
-      {/* Icon */}
       <motion.div 
         className="relative z-10 mb-4 text-[#bdbdbd] group-hover:text-[#ff1e1e] transition-colors duration-300"
         variants={{
@@ -63,14 +60,12 @@ function AnimatedStat({ stat, index }: { stat: typeof stats[0], index: number })
         <stat.icon size={36} strokeWidth={1.5} />
       </motion.div>
 
-      {/* Number */}
       <div className="relative z-10 code-font text-4xl sm:text-5xl font-black text-white group-hover:brightness-125 transition-all duration-300 neon-text flex items-center">
         {stat.prefix}
         <span>{displayValue}</span>
         {stat.suffix}
       </div>
 
-      {/* Label fades in after numbers finish */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
@@ -111,7 +106,7 @@ export default function PartnerWithUs() {
           >
             <div>
               <h3 className="text-2xl font-bold text-white mb-4">Email Us</h3>
-              <p className="text-[#bdbdbd] mb-8">Want to sponsor or partner with us? Send us an email and let's discuss.</p>
+              <p className="text-[#bdbdbd] mb-8">Want to sponsor or partner with us? Send us an email and let&apos;s discuss.</p>
             </div>
             <a href="mailto:contact@omnikonhub.com" className="magnetic-button primary-button w-full flex items-center justify-center">contact@omnikonhub.com</a>
           </motion.div>
@@ -131,7 +126,6 @@ export default function PartnerWithUs() {
           </motion.div>
         </div>
 
-        {/* Real Event Statistics */}
         <div className="mt-24 pt-12 border-t border-[#151515]">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {stats.map((stat, i) => (

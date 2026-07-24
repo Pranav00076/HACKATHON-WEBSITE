@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ReactNode, useEffect, useState } from 'react';
 import GlitchText from './GlitchText';
 import TerminalTypewriter from './TerminalTypewriter';
 
@@ -54,10 +53,7 @@ export default function SpecialWord({ word, className = '' }: SpecialWordProps) 
   }
 }
 
-// Custom effects for each word
-
-function BuildEffect({ word, className }: { word: string, className: string }) {
-  // Assembling effect: letters fly in and lock together
+function BuildEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`inline-flex ${className}`}>
       {word.split('').map((char, i) => (
@@ -76,8 +72,7 @@ function BuildEffect({ word, className }: { word: string, className: string }) {
   );
 }
 
-function SecurityEffect({ word, className }: { word: string, className: string }) {
-  // Cyber scan line
+function SecurityEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block overflow-hidden group/sec ${className}`}>
       {word}
@@ -92,8 +87,7 @@ function SecurityEffect({ word, className }: { word: string, className: string }
   );
 }
 
-function CloudEffect({ word, className }: { word: string, className: string }) {
-  // Floating motion
+function CloudEffect({ word, className }: { word: string; className: string }) {
   return (
     <motion.span 
       className={`inline-block ${className}`}
@@ -105,8 +99,7 @@ function CloudEffect({ word, className }: { word: string, className: string }) {
   );
 }
 
-function FrontendEffect({ word, className }: { word: string, className: string }) {
-  // Gradient wipe
+function FrontendEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block ${className}`}>
       <span className="opacity-30">{word}</span>
@@ -123,8 +116,7 @@ function FrontendEffect({ word, className }: { word: string, className: string }
   );
 }
 
-function InnovationEffect({ word, className }: { word: string, className: string }) {
-  // Energy wave passes through
+function InnovationEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`inline-flex ${className}`}>
       {word.split('').map((char, i) => (
@@ -140,8 +132,7 @@ function InnovationEffect({ word, className }: { word: string, className: string
   );
 }
 
-function CommunityEffect({ word, className }: { word: string, className: string }) {
-  // Connected node animation (letters subtly connected by glow)
+function CommunityEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block ${className}`}>
       <motion.span 
@@ -154,8 +145,7 @@ function CommunityEffect({ word, className }: { word: string, className: string 
   );
 }
 
-function DiscordEffect({ word, className }: { word: string, className: string }) {
-  // Neon pulse
+function DiscordEffect({ word, className }: { word: string; className: string }) {
   return (
     <motion.span 
       className={`inline-block ${className}`}
@@ -167,8 +157,7 @@ function DiscordEffect({ word, className }: { word: string, className: string })
   );
 }
 
-function RegisterEffect({ word, className }: { word: string, className: string }) {
-  // Light sweep
+function RegisterEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block overflow-hidden ${className}`}>
       <span className="relative z-10">{word}</span>
@@ -181,8 +170,7 @@ function RegisterEffect({ word, className }: { word: string, className: string }
   );
 }
 
-function ParticipateEffect({ word, className }: { word: string, className: string }) {
-  // Red energy scan: A thin red light slowly scans through the letters every 5 seconds.
+function ParticipateEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block overflow-hidden ${className}`}>
       <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white">{word}</span>
@@ -191,16 +179,14 @@ function ParticipateEffect({ word, className }: { word: string, className: strin
         animate={{ x: ["-10px", "150%"] }}
         transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 5, ease: "linear" }}
       />
-      {/* Underlying text to preserve spacing */}
       <span className="absolute inset-0 z-0 text-[#ff1e1e]/20">{word}</span>
     </span>
   );
 }
 
-function GravityEffect({ word, className }: { word: string, className: string }) {
+function GravityEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block ${className}`}>
-      {/* Particle burst */}
       <motion.span 
         className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
         initial={{ opacity: 0 }}
@@ -210,7 +196,6 @@ function GravityEffect({ word, className }: { word: string, className: string })
       >
         <span className="absolute w-10 h-10 border border-[#ff1e1e] rounded-full scale-0 animate-ping opacity-20" />
       </motion.span>
-      {/* Gravity distortion */}
       <motion.span 
         className="relative z-10 inline-block"
         initial={{ scaleY: 1, scaleX: 1, y: 0 }}
@@ -224,8 +209,7 @@ function GravityEffect({ word, className }: { word: string, className: string })
   );
 }
 
-function ChampionsEffect({ word, className }: { word: string, className: string }) {
-  // Metallic shine: white light sweep every 10 seconds
+function ChampionsEffect({ word, className }: { word: string; className: string }) {
   return (
     <span className={`relative inline-block overflow-hidden text-transparent bg-clip-text bg-gradient-to-b from-white to-[#bdbdbd] ${className}`}>
       {word}
@@ -238,8 +222,7 @@ function ChampionsEffect({ word, className }: { word: string, className: string 
   );
 }
 
-function UsEffect({ word, className }: { word: string, className: string }) {
-  // Neon pulse
+function UsEffect({ word, className }: { word: string; className: string }) {
   return (
     <motion.span 
       className={`inline-block ${className}`}
@@ -251,8 +234,7 @@ function UsEffect({ word, className }: { word: string, className: string }) {
   );
 }
 
-function JoinOurDiscordEffect({ word, className }: { word: string, className: string }) {
-  // Text pulse effect with a very fast blinking underline
+function JoinOurDiscordEffect({ word, className }: { word: string; className: string }) {
   return (
     <motion.span 
       className={`relative inline-block ${className}`}

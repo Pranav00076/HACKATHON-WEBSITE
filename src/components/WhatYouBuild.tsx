@@ -2,11 +2,20 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Rocket, ArrowRight, Bell } from 'lucide-react';
-import ScrollReveal, { ScrollRevealItem } from './animations/ScrollReveal';
+import { Rocket, ArrowRight } from 'lucide-react';
 
-// Target Date: 15 August 2026 00:00 IST (which is Aug 14, 18:30 UTC)
 const TARGET_DATE = new Date('2026-08-14T18:30:00Z').getTime();
+
+const DOT_POSITIONS = [
+  { left: '10%', top: '20%', duration: 3, delay: 0.1 },
+  { left: '25%', top: '75%', duration: 5, delay: 1.2 },
+  { left: '40%', top: '15%', duration: 4, delay: 0.5 },
+  { left: '60%', top: '80%', duration: 6, delay: 1.8 },
+  { left: '75%', top: '30%', duration: 3.5, delay: 2.1 },
+  { left: '85%', top: '70%', duration: 5.5, delay: 0.8 },
+  { left: '20%', top: '45%', duration: 4.5, delay: 2.5 },
+  { left: '90%', top: '15%', duration: 6.5, delay: 1.0 },
+];
 
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
@@ -82,7 +91,6 @@ export default function WhatYouBuild() {
     days: 0, hours: 0, minutes: 0, seconds: 0
   });
   const [isReleased, setIsReleased] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -96,7 +104,6 @@ export default function WhatYouBuild() {
   );
 
   useEffect(() => {
-    setMounted(true);
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
       const difference = TARGET_DATE - now;
@@ -114,8 +121,6 @@ export default function WhatYouBuild() {
       };
     };
 
-    setTimeLeft(calculateTimeLeft());
-
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
@@ -132,32 +137,23 @@ export default function WhatYouBuild() {
     y.set(mouseY / rect.height);
   };
 
-  if (!mounted) return null;
-
   return (
     <section id="problem-statements" className="section-shell relative overflow-hidden">
-      
-      {/* Background Effects */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-30" />
       
-      {/* Tiny blinking dots */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {DOT_POSITIONS.map((dot, i) => (
           <motion.div
             key={i}
             className="absolute w-[2px] h-[2px] bg-white/40 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
+            style={{ left: dot.left, top: dot.top }}
             animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 2 + Math.random() * 4, repeat: Infinity, delay: Math.random() * 5 }}
+            transition={{ duration: dot.duration, repeat: Infinity, delay: dot.delay }}
           />
         ))}
       </div>
 
       <div className="section-inner min-h-[600px] flex items-center justify-center relative z-10" ref={containerRef} onMouseMove={handleMouseMove}>
-        
         <AnimatePresence mode="wait">
           {isReleased ? (
             <ProblemStatementsList key="released" />
@@ -171,13 +167,11 @@ export default function WhatYouBuild() {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="w-full max-w-4xl mx-auto flex flex-col items-center text-center relative"
             >
-              {/* Mouse-following soft radial glow */}
               <motion.div 
                 className="absolute inset-0 z-0 pointer-events-none mix-blend-screen opacity-50"
                 style={{ background }}
               />
 
-              {/* Release Badge */}
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -188,7 +182,6 @@ export default function WhatYouBuild() {
                 <span>Problem Statements Release &bull; 15 Aug 2026</span>
               </motion.div>
 
-              {/* Heading */}
               <motion.h2 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -211,7 +204,6 @@ export default function WhatYouBuild() {
                 Until then, prepare your team, sharpen your skills, and get ready to build something extraordinary.
               </motion.p>
 
-              {/* Countdown Timer */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -227,16 +219,13 @@ export default function WhatYouBuild() {
                 <CountdownUnit value={timeLeft.seconds} label="Seconds" />
               </motion.div>
 
-              {/* CTA Buttons */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
                 className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10"
               >
-
-                
-                <a href="https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716" target="_blank" rel="noopener noreferrer" className="btn-secondary w-full sm:w-auto px-8 py-3 rounded-lg flex items-center justify-center gap-2 group">
+                <a href="https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716" target="_blank" rel="noopener noreferrer" className="magnetic-button primary-button w-full sm:w-auto px-8 py-3 rounded-lg flex items-center justify-center gap-2 group">
                   Register Now
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </a>

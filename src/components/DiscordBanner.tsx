@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView } from 'framer-motion';
-import { MessageSquare, ArrowRight, CheckCircle2, BookOpen } from 'lucide-react';
+import { MessageSquare, CheckCircle2, BookOpen } from 'lucide-react';
 import { useRef } from 'react';
 
 const features = [
@@ -22,7 +22,6 @@ export default function DiscordBanner() {
 
   return (
     <section className="section-shell relative overflow-hidden py-20" ref={ref}>
-      {/* Background Polish */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-40" />
       <motion.div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[400px] bg-[#ff1e1e]/10 blur-[150px] rounded-full pointer-events-none mix-blend-screen"
@@ -38,10 +37,8 @@ export default function DiscordBanner() {
           whileHover="hover"
           className="premium-card p-8 sm:p-12 relative overflow-hidden group border border-[#ff1e1e]/30 bg-[#0a0a0a]/80 backdrop-blur-2xl rounded-[2rem] shadow-[0_0_40px_rgba(255,30,30,0.1)] transition-all duration-300"
         >
-          {/* Animated Hover Border Glow */}
           <div className="absolute inset-0 rounded-[2rem] border-2 border-transparent group-hover:border-[#ff1e1e]/50 transition-colors duration-500 pointer-events-none" />
           
-          {/* Animated One-Time Border Sweep on Mount */}
           <motion.div 
             initial={{ left: "-100%" }}
             animate={isInView ? { left: "200%" } : {}}
@@ -50,8 +47,6 @@ export default function DiscordBanner() {
           />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            
-            {/* Left Content */}
             <div className="flex flex-col">
               <motion.div 
                 initial={{ opacity: 0, scale: 0.5 }}
@@ -95,18 +90,17 @@ export default function DiscordBanner() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="flex flex-col sm:flex-row gap-4"
               >
-                <a href="https://discord.gg/yWtjK2Tb8T" target="_blank" rel="noopener noreferrer" className="btn-primary px-8 py-3 rounded-lg flex items-center justify-center gap-2 group/btn shadow-[0_0_20px_rgba(255,30,30,0.3)] hover:shadow-[0_0_30px_rgba(255,30,30,0.5)] transition-all">
+                <a href="https://discord.gg/yWtjK2Tb8T" target="_blank" rel="noopener noreferrer" className="magnetic-button primary-button px-8 py-3 rounded-lg flex items-center justify-center gap-2 group/btn shadow-[0_0_20px_rgba(255,30,30,0.3)] hover:shadow-[0_0_30px_rgba(255,30,30,0.5)] transition-all">
                   <MessageSquare size={18} />
                   <span>Join Discord</span>
                 </a>
-                <a href="/rulebook" className="btn-secondary px-8 py-3 rounded-lg flex items-center justify-center gap-2">
+                <a href="/rulebook" className="magnetic-button secondary-button px-8 py-3 rounded-lg flex items-center justify-center gap-2">
                   <BookOpen size={18} />
                   <span>Read Rulebook</span>
                 </a>
               </motion.div>
             </div>
 
-            {/* Right List */}
             <div className="bg-[#111] border border-white/5 p-6 sm:p-8 rounded-2xl">
               <h3 className="code-font text-xs uppercase tracking-widest text-[#ff1e1e] mb-6 font-bold">What you get access to</h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useInView, useSpring, useTransform } from 'framer-motion';
 
 interface AnimatedCounterProps {
@@ -18,7 +18,6 @@ export default function AnimatedCounter({
 }: AnimatedCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const [hasStarted, setHasStarted] = useState(false);
 
   const spring = useSpring(0, {
     stiffness: 50,
@@ -32,11 +31,10 @@ export default function AnimatedCounter({
   });
 
   useEffect(() => {
-    if (isInView && !hasStarted) {
-      setHasStarted(true);
+    if (isInView) {
       spring.set(value);
     }
-  }, [isInView, value, spring, hasStarted]);
+  }, [isInView, value, spring]);
 
   return (
     <span ref={ref} className={`inline-flex items-center ${className}`}>

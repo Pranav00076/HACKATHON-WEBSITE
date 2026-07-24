@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { rulebookData } from '@/lib/rulebook-data';
-import { timelinePhases } from '@/lib/timeline-data';
-import { prizes } from '@/components/PrizePool';
+import { rulebookData } from '@/data/rulebook';
+import { timelinePhases } from '@/data/timeline';
+import { prizesData } from '@/data/prizes';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 
@@ -18,13 +18,11 @@ export default function RulebookPage() {
 
   return (
     <div className="min-h-screen bg-black text-gray-300 font-sans selection:bg-[#ff1e1e] selection:text-white">
-      {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,0,0,0.05)_0%,transparent_50%)]" />
         <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px)] bg-[size:100%_4px]" />
       </div>
 
-      {/* Navigation Bar */}
       <nav className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur-md border-b border-[#ff1e1e]/20">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-[#ff1e1e] hover:text-white transition-colors group">
@@ -38,8 +36,6 @@ export default function RulebookPage() {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 flex flex-col lg:flex-row gap-12 items-start">
-        
-        {/* Sticky Sidebar / TOC */}
         <aside className="w-full lg:w-64 lg:sticky lg:top-24 shrink-0">
           <div className="border border-[#ff1e1e]/20 bg-black/50 backdrop-blur-sm p-6 rounded-sm shadow-[0_0_15px_rgba(255,0,0,0.05)]">
             <h3 className="text-white font-mono uppercase tracking-widest mb-6 pb-4 border-b border-[#ff1e1e]/20 text-sm">
@@ -60,7 +56,6 @@ export default function RulebookPage() {
             </ul>
           </div>
 
-          {/* Key Dates Callout */}
           <div className="mt-8 border border-[#ff1e1e]/40 bg-red-950/10 p-6 rounded-sm shadow-[0_0_20px_rgba(255,0,0,0.1)]">
             <h3 className="text-[#ff1e1e] font-mono uppercase tracking-widest mb-4 flex items-center gap-2 text-sm">
               <div className="w-2 h-2 rounded-full bg-[#ff1e1e] animate-pulse" />
@@ -77,7 +72,6 @@ export default function RulebookPage() {
           </div>
         </aside>
 
-        {/* Main Content */}
         <main className="flex-1 w-full max-w-4xl">
           <header className="mb-16">
             <motion.h1 
@@ -108,13 +102,11 @@ export default function RulebookPage() {
                 transition={{ duration: 0.5 }}
                 className="scroll-mt-24"
               >
-                {/* Section Header */}
                 <h2 className="text-2xl md:text-3xl font-mono font-bold text-white uppercase tracking-widest mb-8 pb-4 border-b border-white/10 flex items-center gap-4">
                   <span className="text-[#ff1e1e] bg-red-950/30 px-3 py-1 rounded-sm border border-[#ff1e1e]/20">{section.id}</span>
                   {section.title}
                 </h2>
 
-                {/* List Items */}
                 {section.items.length > 0 && (
                   <div className="space-y-4">
                     {section.items.map((item, i) => (
@@ -128,7 +120,6 @@ export default function RulebookPage() {
                   </div>
                 )}
 
-                {/* Render Table (e.g., Evaluation Criteria) */}
                 {section.table && (
                   <div className="mt-8 overflow-x-auto border border-white/10 rounded-sm">
                     <table className="w-full text-left text-sm">
@@ -159,12 +150,11 @@ export default function RulebookPage() {
                   </div>
                 )}
 
-                {/* Custom Rendering for Prizes */}
                 {section.id === "06" && (
                   <div className="mt-12 grid gap-4 md:grid-cols-3">
-                    {prizes.map((prize) => (
+                    {prizesData.map((prize) => (
                       <div key={prize.title} className="premium-card p-5">
-                        <div className="text-sm uppercase tracking-[0.16em] text-text-muted">{prize.place}</div>
+                        <div className="text-sm uppercase tracking-[0.16em] text-[#bdbdbd]">{prize.place}</div>
                         <div className="mt-3 text-2xl font-bold text-white">{prize.title}</div>
                         <div className="code-font mt-2 text-2xl sm:text-3xl font-black" style={{ color: prize.accent }}>{prize.amountStr}</div>
                       </div>
@@ -176,7 +166,6 @@ export default function RulebookPage() {
             ))}
           </div>
         </main>
-
       </div>
     </div>
   );
