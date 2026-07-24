@@ -1,75 +1,31 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
-import { Bot, Cloud, LayoutDashboard, Layers, Shield, Trophy } from 'lucide-react';
+import { Trophy } from 'lucide-react';
 import ScrollReveal, { ScrollRevealItem } from './animations/ScrollReveal';
 import TextReveal from './animations/TextReveal';
+import { tracksData, Track } from '@/data/tracks';
 
-const tracks = [
-  {
-    title: 'Frontend & UI',
-    icon: LayoutDashboard,
-    tags: ['React', 'Next.js', 'Tailwind CSS', 'TypeScript'],
-    desc: 'Create beautiful, accessible, and high-performance interfaces that deliver exceptional user experiences.',
-    badge: 'Popular',
-    award: 'Best Frontend Project',
-    examples: ['Portfolio Builder', 'Design System'],
-    featured: false,
-    iconAnim: { scale: [1, 1.1, 1], transition: { duration: 1.5, repeat: Infinity, ease: 'easeInOut' } }
-  },
-  {
-    title: 'Full Stack Development',
-    icon: Layers,
-    tags: ['Node.js', 'Express', 'PostgreSQL', 'Prisma'],
-    desc: 'Build complete web applications with scalable backends, clean architecture, and seamless user flows.',
-    badge: 'Intermediate',
-    award: 'Best Full Stack Project',
-    examples: ['Hospital Management', 'Event Platform'],
-    featured: false,
-    iconAnim: { y: [0, -5, 0], transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' } }
-  },
-  {
-    title: 'Cloud & DevOps',
-    icon: Cloud,
-    tags: ['Docker', 'Kubernetes', 'AWS', 'CI/CD'],
-    desc: 'Deploy scalable cloud-native applications using containers, CI/CD, serverless platforms, and observability tools.',
-    badge: 'Advanced',
-    award: 'Best Cloud Architecture',
-    examples: ['Kubernetes Dashboard', 'CI/CD Pipeline'],
-    featured: false,
-    iconAnim: { x: [0, 5, -5, 0], transition: { duration: 3, repeat: Infinity, ease: 'easeInOut' } }
-  },
-  {
-    title: 'AI & Machine Learning',
-    icon: Bot,
-    tags: ['Python', 'LLMs', 'Agents', 'RAG'],
-    desc: 'Develop intelligent applications powered by LLMs, automation, agents, computer vision, or predictive models.',
-    badge: 'Advanced',
-    award: 'Best AI Innovation',
-    examples: ['Resume Analyzer', 'AI Study Assistant'],
-    featured: true,
-    iconAnim: { opacity: [1, 0.5, 1], scale: [1, 1.05, 1], transition: { duration: 1, repeat: Infinity, ease: 'easeInOut' } }
-  },
-  {
-    title: 'Cybersecurity',
-    icon: Shield,
-    tags: ['OAuth', 'JWT', 'Encryption', 'Threat Modeling'],
-    desc: 'Design secure systems, authentication flows, privacy-first applications, and resilient infrastructure.',
-    badge: 'Advanced',
-    award: 'Best Security Solution',
-    examples: ['Password Manager', 'Secure File Vault'],
-    featured: false,
-    iconAnim: { rotateY: [0, 15, -15, 0], transition: { duration: 2, repeat: Infinity, ease: 'easeInOut' } }
-  },
+const PARTICLE_POSITIONS = [
+  { left: '10%', top: '20%', duration: 8, delay: 0, xOffset: 20 },
+  { left: '25%', top: '70%', duration: 10, delay: 1, xOffset: -30 },
+  { left: '40%', top: '15%', duration: 7, delay: 2, xOffset: 15 },
+  { left: '55%', top: '80%', duration: 9, delay: 0.5, xOffset: -25 },
+  { left: '70%', top: '30%', duration: 11, delay: 1.5, xOffset: 35 },
+  { left: '85%', top: '65%', duration: 6, delay: 2.5, xOffset: -20 },
+  { left: '15%', top: '85%', duration: 9.5, delay: 3, xOffset: 10 },
+  { left: '75%', top: '10%', duration: 8.5, delay: 1.2, xOffset: -15 },
+  { left: '90%', top: '45%', duration: 10.5, delay: 0.8, xOffset: 25 },
+  { left: '35%', top: '50%', duration: 7.5, delay: 2.2, xOffset: -10 },
 ];
 
 const stats = [
-  { value: 5, suffix: '', label: 'Innovation Tracks' },
+  { value: 5, prefix: '', suffix: '', label: 'Innovation Tracks' },
   { value: 10, prefix: '₹', suffix: 'K', label: 'Prize Pool' },
-  { value: 1, suffix: ' Month', label: 'Build Cycle' },
-  { value: 100, suffix: '%', label: 'Online' },
-  { value: 0, suffix: ' National', label: 'Participation' }, // "National" isn't a number but we can just show "National Participation" without a counter, or 100% National. I'll handle strings.
+  { value: 1, prefix: '', suffix: ' Month', label: 'Build Cycle' },
+  { value: 100, prefix: '', suffix: '%', label: 'Online Arena' },
+  { value: 0, prefix: '', suffix: ' National', label: 'Participation' },
 ];
 
 function AnimatedStat({ stat }: { stat: typeof stats[0] }) {
@@ -78,7 +34,7 @@ function AnimatedStat({ stat }: { stat: typeof stats[0] }) {
   
   if (stat.label === 'Participation') {
     return (
-      <div ref={ref} className="flex flex-col items-center justify-center">
+      <div ref={ref} className="flex flex-col items-center justify-center text-center">
         <motion.div initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="font-black text-white text-2xl sm:text-3xl neon-text">
           National
         </motion.div>
@@ -88,8 +44,8 @@ function AnimatedStat({ stat }: { stat: typeof stats[0] }) {
   }
   
   return (
-    <div ref={ref} className="flex flex-col items-center justify-center">
-      <div className="font-black text-white text-2xl sm:text-3xl neon-text flex items-center">
+    <div ref={ref} className="flex flex-col items-center justify-center text-center">
+      <div className="font-black text-white text-2xl sm:text-3xl neon-text flex items-center justify-center">
         {stat.prefix}
         <motion.span initial={{ opacity: 0, y: 10 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, ease: "easeOut" }}>
           {stat.value}
@@ -101,7 +57,7 @@ function AnimatedStat({ stat }: { stat: typeof stats[0] }) {
   );
 }
 
-function TrackCard({ track, index }: { track: typeof tracks[0]; index: number }) {
+export function TrackCard({ track, index }: { track: Track; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -136,27 +92,23 @@ function TrackCard({ track, index }: { track: typeof tracks[0]; index: number })
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, perspective: 1000 }}
-      className={`premium-card group relative flex flex-col h-full overflow-hidden transition-all duration-300 transform-gpu bg-[#111111] ${track.featured ? 'lg:col-span-2 min-h-[480px] !border-[#ff1e1e]/30' : 'min-h-[440px]'}`}
+      className={`premium-card group relative flex flex-col h-full overflow-hidden transition-all duration-300 transform-gpu bg-[#111111] ${track.featured ? 'lg:col-span-2 min-h-[480px] !border-[#ff1e1e]/40' : 'min-h-[440px]'}`}
     >
-      {/* 3D background gradient spotlight */}
       <motion.div 
         style={{
           background: useTransform(
             [mouseXSpring, mouseYSpring],
-            ([xPos, yPos]) => `radial-gradient(500px circle at ${(xPos as number) * 100 + 50}% ${(yPos as number) * 100 + 50}%, rgba(255, 30, 30, 0.12), transparent 50%)`
+            ([xPos, yPos]) => `radial-gradient(500px circle at ${(xPos as number) * 100 + 50}% ${(yPos as number) * 100 + 50}%, rgba(255, 30, 30, 0.15), transparent 50%)`
           )
         }}
         className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" 
       />
 
-      {/* Featured Red Radial Gradient */}
       {track.featured && (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#ff1e1e]/10 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#ff1e1e]/15 to-transparent pointer-events-none" />
       )}
       
       <div className="relative z-10 flex h-full flex-col p-8 sm:p-10 pointer-events-none">
-        
-        {/* Header: Icon & Badge */}
         <div className="mb-8 flex items-start justify-between gap-4">
           <div className="flex items-center gap-6">
             <div 
@@ -185,13 +137,10 @@ function TrackCard({ track, index }: { track: typeof tracks[0]; index: number })
           {track.desc}
         </p>
 
-        {/* Example Projects */}
-        <div 
-          className="mt-6 flex flex-col gap-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300"
-        >
+        <div className="mt-6 flex flex-col gap-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
           <div className="text-xs uppercase tracking-widest text-[#bdbdbd] code-font mb-1">Ideas to build</div>
           <ul className="flex flex-wrap gap-2">
-            {track.examples.map(ex => (
+            {track.examples.map((ex) => (
               <li key={ex} className="text-sm text-white bg-[#222] border border-white/10 rounded-md px-3 py-1.5 flex items-center gap-2 shadow-inner">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ff1e1e]/70" />
                 {ex}
@@ -200,7 +149,6 @@ function TrackCard({ track, index }: { track: typeof tracks[0]; index: number })
           </ul>
         </div>
         
-        {/* Tags */}
         <div className="mt-auto pt-4 mb-12 flex flex-wrap gap-2">
           {track.tags.map((tag) => (
             <span 
@@ -212,10 +160,7 @@ function TrackCard({ track, index }: { track: typeof tracks[0]; index: number })
           ))}
         </div>
 
-        {/* Awards Footer */}
-        <div 
-          className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#ff1e1e]/10 bg-gradient-to-t from-[#ff1e1e]/10 to-transparent flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-[#ff1e1e]/10 bg-gradient-to-t from-[#ff1e1e]/10 to-transparent flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Trophy size={16} className="text-[#ff1e1e]" />
           <span className="text-sm font-semibold text-white tracking-wide">{track.award}</span>
         </div>
@@ -226,12 +171,8 @@ function TrackCard({ track, index }: { track: typeof tracks[0]; index: number })
 }
 
 export default function Tracks() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
   return (
     <section id="tracks" className="section-shell overflow-hidden relative">
-      {/* Background Effects */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none opacity-40" />
       
       <motion.div 
@@ -240,27 +181,22 @@ export default function Tracks() {
         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
       
-      {/* Radial Red Glow behind heading */}
       <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#ff1e1e]/15 blur-[150px] rounded-[100%] pointer-events-none mix-blend-screen" />
 
-      {/* Floating Red Particles */}
-      {mounted && [...Array(12)].map((_, i) => (
+      {PARTICLE_POSITIONS.map((p, i) => (
         <motion.div
           key={i}
-          className="absolute w-1.5 h-1.5 bg-[#ff1e1e]/30 rounded-full blur-[1px]"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
+          className="absolute w-1.5 h-1.5 bg-[#ff1e1e]/40 rounded-full blur-[1px]"
+          style={{ left: p.left, top: p.top }}
           animate={{
             y: [0, -150, 0],
-            x: [0, (Math.random() - 0.5) * 60, 0],
+            x: [0, p.xOffset, 0],
             opacity: [0, 1, 0],
           }}
           transition={{
-            duration: 6 + Math.random() * 6,
+            duration: p.duration,
             repeat: Infinity,
-            delay: Math.random() * 5,
+            delay: p.delay,
             ease: "easeInOut"
           }}
         />
@@ -274,11 +210,10 @@ export default function Tracks() {
             <TextReveal text="Gravity" delay={0.2} as="span" className="text-[#ff1e1e] inline-block" />
           </h2>
           <p className="section-subtitle mt-6 max-w-3xl">
-            Choose the track that matches your passion. Whether you're building AI applications, cloud infrastructure, secure systems, or polished user experiences, every track is judged independently and rewards creativity, technical excellence, and real-world impact.
+            Choose the track that matches your passion. Whether you&apos;re building AI applications, cloud infrastructure, secure systems, or polished user experiences, every track is judged independently and rewards creativity, technical excellence, and real-world impact.
           </p>
         </ScrollRevealItem>
 
-        {/* Stats Strip */}
         <ScrollRevealItem className="mb-16">
           <div className="premium-card p-6 sm:p-8 relative overflow-hidden border-[#ff1e1e]/20 bg-[#0a0a0a]/80 backdrop-blur-xl">
             <div className="grid grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-4 relative z-10 divide-x divide-white/5">
@@ -292,8 +227,8 @@ export default function Tracks() {
         </ScrollRevealItem>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 perspective-[2000px] auto-rows-fr">
-          {tracks.map((track, index) => (
-            <ScrollRevealItem key={track.title} className={track.featured ? 'lg:col-span-2 h-full' : 'h-full'}>
+          {tracksData.map((track, index) => (
+            <ScrollRevealItem key={track.id} className={track.featured ? 'lg:col-span-2 h-full' : 'h-full'}>
               <TrackCard track={track} index={index} />
             </ScrollRevealItem>
           ))}

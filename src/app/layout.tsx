@@ -5,6 +5,9 @@ import LenisProvider from "@/components/LenisProvider";
 import GlobalEffects from "@/components/GlobalEffects";
 import LoadingScreen from "@/components/LoadingScreen";
 import SocialMedia from "@/components/SocialMedia";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import DynamicBackground from "@/components/DynamicBackground";
 
 const orbitron = Orbitron({
   variable: "--font-orbitron",
@@ -24,8 +27,17 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Omnikon Hackathon",
-  description: "The ultimate Web Dev & Full Stack Hackathon",
+  title: {
+    default: "Omnikon Hackathon 2026 | Build The Impossible",
+    template: "%s | Omnikon Hackathon 2026",
+  },
+  description: "The ultimate national Web Dev, Full Stack, AI & Cloud hackathon arena. Build real products, compete for cash prizes, and connect with tech mentors.",
+  keywords: ["Omnikon", "Hackathon", "Web Development", "AI", "Full Stack", "Cloud", "Cybersecurity", "Tech Competition"],
+  openGraph: {
+    title: "Omnikon Hackathon 2026 | Build The Impossible",
+    description: "National Tech Hackathon 2026. Turn less than 1 month of coding into a product that matters.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -35,12 +47,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${orbitron.variable} ${rajdhani.variable} ${shareTechMono.variable}`}>
-      <body>
+      <body className="bg-[#050505] text-white selection:bg-[#ff1e1e] selection:text-white">
         <LoadingScreen />
         <SocialMedia />
+        <DynamicBackground />
         <LenisProvider>
           <GlobalEffects />
-          {children}
+          <Navbar />
+          <main className="min-h-screen pt-20">
+            {children}
+          </main>
+          <Footer />
         </LenisProvider>
       </body>
     </html>

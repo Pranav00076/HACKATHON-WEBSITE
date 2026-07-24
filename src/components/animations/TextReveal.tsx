@@ -42,16 +42,8 @@ export default function TextReveal({
     },
   };
 
-  const Component = motion[as] as any;
-
-  return (
-    <Component
-      variants={container}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
-      className={`flex flex-wrap ${className}`}
-    >
+  const innerContent = (
+    <>
       {splitBy === 'words' ? (
         words.map((word, index) => (
           <motion.span
@@ -73,6 +65,23 @@ export default function TextReveal({
           </motion.span>
         ))
       )}
-    </Component>
+    </>
   );
+
+  const containerProps = {
+    variants: container,
+    initial: "hidden" as const,
+    whileInView: "visible" as const,
+    viewport: { once: true, margin: '-50px' },
+    className: `flex flex-wrap ${className}`
+  };
+
+  if (as === 'h1') return <motion.h1 {...containerProps}>{innerContent}</motion.h1>;
+  if (as === 'h2') return <motion.h2 {...containerProps}>{innerContent}</motion.h2>;
+  if (as === 'h3') return <motion.h3 {...containerProps}>{innerContent}</motion.h3>;
+  if (as === 'h4') return <motion.h4 {...containerProps}>{innerContent}</motion.h4>;
+  if (as === 'p') return <motion.p {...containerProps}>{innerContent}</motion.p>;
+  if (as === 'span') return <motion.span {...containerProps}>{innerContent}</motion.span>;
+
+  return <motion.div {...containerProps}>{innerContent}</motion.div>;
 }
