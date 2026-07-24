@@ -81,9 +81,13 @@ function PrizeCard({ prize, isInView, baseDelay }: { prize: Prize; isInView: boo
       }}
       whileHover="hover"
       variants={{
-        hover: { y: -8 }
+        hover: { y: -6 }
       }}
-      className={`premium-card relative p-8 group overflow-hidden transition-all duration-300 transform-gpu ${prize.featured ? 'lg:-mt-10 lg:min-h-[460px] border-[#ff1e1e]/40' : 'lg:min-h-[400px]'}`}
+      className={`premium-card relative p-6 sm:p-8 flex flex-col justify-between h-full min-h-[480px] group overflow-hidden transition-all duration-300 transform-gpu ${
+        prize.featured 
+          ? 'border-[#ff1e1e]/40 shadow-[0_0_30px_rgba(255,30,30,0.15)] bg-gradient-to-b from-[#181818] to-[#0a0a0a]' 
+          : 'border-white/10 bg-[#111]'
+      }`}
     >
       <motion.div 
         style={{
@@ -112,20 +116,19 @@ function PrizeCard({ prize, isInView, baseDelay }: { prize: Prize; isInView: boo
       />
       
       <div className="relative z-10 flex h-full flex-col items-center text-center pointer-events-none">
-        
-        <div className="mb-6 flex flex-col items-center gap-4">
+        <div className="mb-4 sm:mb-6 flex flex-col items-center gap-3 sm:gap-4">
           <motion.div 
             initial={{ opacity: 0, scale: 0.5 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5, delay: revealDelay + 0.1, type: "spring" }}
           >
             <motion.div 
-              className="flex h-20 w-20 items-center justify-center rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-[0_15px_35px_rgba(0,0,0,0.5)] group-hover:border-white/30 transition-all duration-300" 
+              className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl border border-white/10 bg-[#0a0a0a] shadow-[0_15px_35px_rgba(0,0,0,0.5)] group-hover:border-white/30 transition-all duration-300" 
               style={{ color: prize.accent }}
               variants={{ hover: { scale: 1.1 } }}
               animate={
                 prize.featured && isInView 
-                  ? { y: [0, -10, 0] } 
+                  ? { y: [0, -8, 0] } 
                   : {}
               }
               transition={
@@ -134,7 +137,7 @@ function PrizeCard({ prize, isInView, baseDelay }: { prize: Prize; isInView: boo
                   : { duration: 0.3, ease: [0.25, 1, 0.5, 1] }
               }
             >
-              <prize.icon size={36} />
+              <prize.icon size={30} className="sm:w-9 sm:h-9" />
             </motion.div>
           </motion.div>
           <motion.div 
@@ -151,7 +154,7 @@ function PrizeCard({ prize, isInView, baseDelay }: { prize: Prize; isInView: boo
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: revealDelay + 0.2 }}
-          className="text-3xl font-bold text-white mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-300"
+          className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2 group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-300"
         >
           {prize.title}
         </motion.h3>
@@ -160,10 +163,10 @@ function PrizeCard({ prize, isInView, baseDelay }: { prize: Prize; isInView: boo
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.4, delay: revealDelay + 0.3 }}
-          className="relative overflow-hidden mt-2"
+          className="relative overflow-hidden mt-1 sm:mt-2"
         >
           <div 
-            className="code-font text-5xl font-black neon-text transition-colors duration-300 group-hover:brightness-125" 
+            className="code-font text-4xl sm:text-5xl font-black neon-text transition-colors duration-300 group-hover:brightness-125" 
             style={{ color: prize.accent }}
           >
             {displayAmount}
@@ -176,19 +179,19 @@ function PrizeCard({ prize, isInView, baseDelay }: { prize: Prize; isInView: boo
           />
         </motion.div>
 
-        <div className="my-8 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-white/50 transition-colors duration-300" />
+        <div className="my-6 sm:my-8 h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:via-white/50 transition-colors duration-300" />
 
-        <ul className="mt-auto grid gap-4 w-full text-left">
+        <ul className="mt-auto grid gap-3 sm:gap-4 w-full text-left">
           {prize.perks.map((perk) => (
             <motion.li 
               key={perk} 
               initial={{ opacity: 0, x: -10 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.4, delay: sweepDelay }}
-              className="flex items-center gap-3 text-[#bdbdbd] group-hover:text-white transition-colors duration-300 font-medium"
+              className="flex items-center gap-2.5 sm:gap-3 text-[#bdbdbd] group-hover:text-white transition-colors duration-300 font-medium"
             >
               <span className="h-1.5 w-1.5 rounded-full shrink-0" style={{ backgroundColor: prize.accent, boxShadow: `0 0 10px ${prize.accent}` }} />
-              <span className="text-sm">{perk}</span>
+              <span className="text-xs sm:text-sm leading-tight">{perk}</span>
             </motion.li>
           ))}
         </ul>
@@ -236,7 +239,7 @@ export default function PrizePool() {
       ))}
 
       <div className="section-inner relative z-10">
-        <div className="mx-auto mb-20 max-w-3xl text-center flex flex-col items-center">
+        <div className="mx-auto mb-12 sm:mb-20 max-w-3xl text-center flex flex-col items-center">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, filter: "drop-shadow(0 0 0 rgba(255,30,30,0))" }}
             animate={isInView ? { opacity: 1, scale: 1, filter: "drop-shadow(0 0 10px rgba(255,30,30,0.5))" } : {}}
@@ -264,13 +267,13 @@ export default function PrizePool() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="section-subtitle mx-auto mt-6"
+            className="section-subtitle mx-auto mt-4 sm:mt-6"
           >
             Cash awards, recognition, and useful feedback for the strongest products across the Omnikon build arena.
           </motion.p>
         </div>
 
-        <div className="grid items-end gap-6 lg:grid-cols-3 perspective-[2000px]">
+        <div className="grid items-stretch gap-6 grid-cols-1 lg:grid-cols-3 perspective-[2000px]">
           {prizesData.map((prize) => (
             <PrizeCard 
               key={prize.title} 

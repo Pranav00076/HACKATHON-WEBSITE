@@ -9,11 +9,21 @@ export interface SocialLink {
   icon: string;
 }
 
+export interface PartnerItem {
+  name: string;
+  role: string;
+  badge: string;
+  desc: string;
+  logoUrl?: string;
+  websiteUrl: string;
+}
+
 export const HACKATHON_CONFIG = {
   name: "Omnikon",
   tagline: "Build The Impossible",
-  subTagline: "National Tech Hackathon 2026",
-  description: "Turn less than 1 month of coding into a product that matters. If you're a builder, designer, or creator with ideas, this is your arena.",
+  subTagline: "🔴 REGISTRATIONS ARE LIVE ON UNSTOP",
+  registrationStatus: "LIVE",
+  description: "Turn less than 1 month of coding into a product that matters. Registrations are officially open on Unstop. If you're a builder, designer, or creator with ideas, this is your arena.",
   registrationUrl: "https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716",
   dates: {
     start: "Aug 15, 2026",
@@ -23,6 +33,22 @@ export const HACKATHON_CONFIG = {
   },
   location: "Online on Unstop",
   organization: "Omnikon Tech Community",
+  partners: [
+    {
+      name: "Unstop",
+      role: "Platform & Hosting Partner",
+      badge: "Official Host",
+      desc: "Powered and hosted on Unstop — India's leading platform for competitions, hackathons, and career opportunities.",
+      websiteUrl: "https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716"
+    },
+    {
+      name: "Upstox (Uplearn)",
+      role: "Knowledge Partner",
+      badge: "Knowledge Partner",
+      desc: "Empowering young developers with financial literacy, tech insights, and career learning resources.",
+      websiteUrl: "https://upstox.com"
+    }
+  ] as PartnerItem[],
   stats: [
     { label: "Colleges", value: "50+" },
     { label: "Prize pool", value: "₹10K" },
@@ -30,9 +56,9 @@ export const HACKATHON_CONFIG = {
     { label: "Tracks", value: "5" },
   ] as StatItem[],
   socials: [
-    { name: "Discord", url: "https://discord.gg", icon: "discord" },
-    { name: "Twitter", url: "https://twitter.com", icon: "twitter" },
-    { name: "LinkedIn", url: "https://linkedin.com", icon: "linkedin" },
-    { name: "Instagram", url: "https://instagram.com", icon: "instagram" },
+    { name: "Discord", url: "https://discord.gg/yWtjK2Tb8T", icon: "discord" },
+    { name: "Twitter", url: "https://x.com/OmnikonOrg", icon: "twitter" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/company/omnikon-org", icon: "linkedin" },
+    { name: "Instagram", url: "https://www.instagram.com/omnikonorg", icon: "instagram" },
   ] as SocialLink[],
 };

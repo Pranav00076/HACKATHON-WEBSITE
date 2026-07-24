@@ -51,7 +51,7 @@ export default function Timeline() {
   return (
     <section id="timeline" className="section-shell relative overflow-hidden">
       <ScrollReveal className="section-inner max-w-4xl mx-auto">
-        <ScrollRevealItem className="mb-20 text-center">
+        <ScrollRevealItem className="mb-12 sm:mb-20 text-center">
           <div className="eyebrow mx-auto">The Roadmap</div>
           <h2 className="section-title">
             <TextReveal text="Hackathon" delay={0.1} as="span" className="inline-block mr-2" />
@@ -60,52 +60,46 @@ export default function Timeline() {
         </ScrollRevealItem>
 
         <div ref={containerRef} className="relative pb-10">
-          {/* Background vertical line */}
-          <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-[2px] bg-[#151515] md:-translate-x-1/2" />
+          <div className="absolute left-4 sm:left-[28px] md:left-1/2 top-0 bottom-0 w-[2px] bg-[#151515] md:-translate-x-1/2" />
           
-          {/* Animated vertical line */}
           <motion.div 
-            className="absolute left-[28px] md:left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#ff1e1e] to-[#ff1e1e]/20 md:-translate-x-1/2 shadow-[0_0_15px_#ff1e1e]"
+            className="absolute left-4 sm:left-[28px] md:left-1/2 top-0 w-[2px] bg-gradient-to-b from-[#ff1e1e] to-[#ff1e1e]/20 md:-translate-x-1/2 shadow-[0_0_15px_#ff1e1e]"
             style={{ height: lineHeight }}
           />
 
-          <div className="flex flex-col gap-16 relative">
+          <div className="flex flex-col gap-10 sm:gap-16 relative">
             {timeline.map((item, index) => {
               const isEven = index % 2 === 0;
               return (
                 <ScrollRevealItem key={item.phase}>
                   <div className={`relative flex items-center ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
-                    
-                    {/* Glowing Node */}
                     <motion.div 
-                      className="absolute left-[28px] md:left-1/2 w-4 h-4 bg-[#050505] border-2 border-[#ff1e1e] rounded-full shadow-[0_0_15px_#ff1e1e] transform -translate-x-1/2 md:translate-x-[-50%] z-10"
-                      whileInView={{ backgroundColor: "#ff1e1e", scale: [1, 1.5, 1] }}
+                      className="absolute left-4 sm:left-[28px] md:left-1/2 w-4 h-4 bg-[#050505] border-2 border-[#ff1e1e] rounded-full shadow-[0_0_15px_#ff1e1e] transform -translate-x-1/2 md:translate-x-[-50%] z-10"
+                      whileInView={{ backgroundColor: "#ff1e1e", scale: [1, 1.4, 1] }}
                       transition={{ duration: 0.5, delay: 0.2 }}
                       viewport={{ once: true, margin: "-50px" }}
                     />
 
-                    {/* Content Box */}
-                    <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pr-16 text-left md:text-right' : 'md:pl-16 text-left'}`}>
+                    <div className={`w-full md:w-1/2 pl-10 sm:pl-16 md:pl-0 ${isEven ? 'md:pr-16 text-left md:text-right' : 'md:pl-16 text-left'}`}>
                       <motion.div
-                        whileHover={{ scale: 1.05, y: -5 }}
+                        whileHover={{ scale: 1.03, y: -3 }}
                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                        className="premium-card p-6 sm:p-8 inline-block w-full group overflow-hidden relative"
+                        className="premium-card p-5 sm:p-8 inline-block w-full group overflow-hidden relative"
                       >
-                        {/* Hover glow */}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#ff1e1e]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                         
                         <div className="relative z-10">
-                          <div className="code-font text-[#ff1e1e] text-sm mb-2 uppercase tracking-widest inline-flex items-center gap-2">
+                          <div className="code-font text-[#ff1e1e] text-xs sm:text-sm mb-2 uppercase tracking-widest inline-flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-[#ff1e1e] animate-pulse" />
                             {item.phase}
                           </div>
-                          <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-[#ff1e1e] group-hover:drop-shadow-[0_0_10px_rgba(255,30,30,0.5)] transition-all duration-300">
+                          <h3 className="text-xl sm:text-3xl font-bold text-white mb-2 group-hover:text-[#ff1e1e] group-hover:drop-shadow-[0_0_10px_rgba(255,30,30,0.5)] transition-all duration-300">
                             {item.title}
                           </h3>
-                          <div className="code-font text-white/80 bg-white/5 inline-block px-3 py-1 rounded mb-4 text-xs tracking-wider">
+                          <div className="code-font text-white/80 bg-white/5 inline-block px-3 py-1 rounded mb-3 sm:mb-4 text-xs tracking-wider">
                             {item.date}
                           </div>
-                          <p className="text-[#bdbdbd] group-hover:text-white transition-colors duration-300">
+                          <p className="text-[#bdbdbd] text-sm sm:text-base leading-relaxed group-hover:text-white transition-colors duration-300">
                             {item.desc}
                           </p>
                         </div>
