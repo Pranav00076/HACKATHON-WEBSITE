@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -81,22 +81,14 @@ export default function Navbar() {
           })}
         </ul>
 
-        {/* Register Button */}
-        <motion.a 
-          href="https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="magnetic-button primary-button hidden md:inline-flex min-h-10 px-5 text-xs relative overflow-hidden group"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+        {/* Problem Statements Button */}
+        <Link 
+          href="/tracks#problem-statements" 
+          className="magnetic-button primary-button hidden md:inline-flex min-h-10 px-5 text-xs relative overflow-hidden group items-center gap-2"
         >
-          <motion.div 
-            className="absolute inset-0 bg-[#ff1e1e]/20 blur-md"
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-          <span className="relative z-10">Register</span>
-        </motion.a>
+          <FileText size={14} />
+          <span className="relative z-10">Problem PDF</span>
+        </Link>
 
         {/* Mobile menu toggle */}
         <button
@@ -135,14 +127,14 @@ export default function Navbar() {
                   </Link>
                 );
               })}
-              <a 
-                href="https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="magnetic-button primary-button mt-4 w-full text-center"
+              <Link 
+                href="/tracks#problem-statements" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="magnetic-button primary-button mt-4 w-full text-center flex items-center justify-center gap-2"
               >
-                Register Now
-              </a>
+                <FileText size={16} />
+                <span>View Problem Statements</span>
+              </Link>
             </div>
           </motion.div>
         )}

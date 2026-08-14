@@ -1,63 +1,11 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, Variants, useMotionValue, useTransform } from 'framer-motion';
-import { ArrowRight, CalendarDays, MapPin, Rocket, Sparkles } from 'lucide-react';
+import { ArrowRight, CalendarDays, MapPin, FileText, BookOpen } from 'lucide-react';
 import TextReveal from './animations/TextReveal';
 import { HACKATHON_CONFIG } from '@/data/hackathon';
-
-const targetDate = new Date(HACKATHON_CONFIG.dates.targetIso);
-
-function Countdown() {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    const update = () => {
-      const difference = Math.max(targetDate.getTime() - Date.now(), 0);
-      setTimeLeft({
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      });
-    };
-
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="flex flex-col items-center w-full mt-8 sm:mt-12">
-      {/* Explicit Label explaining why the countdown is here */}
-      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ff1e1e]/30 bg-[#ff1e1e]/10 text-xs font-mono uppercase tracking-widest text-white mb-3 shadow-[0_0_15px_rgba(255,30,30,0.2)]">
-        <Rocket size={14} className="text-[#ff1e1e]" />
-        <span>Countdown to Problem Statements Release &bull; 15 Aug 2026</span>
-      </div>
-
-      <div className="grid w-full grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-2">
-        {Object.entries(timeLeft).map(([unit, value]) => (
-          <motion.div 
-            key={unit} 
-            className="premium-card p-3 sm:p-4 text-center group cursor-default overflow-hidden relative"
-            whileHover={{ scale: 1.05, y: -3 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#ff1e1e]/0 via-[#ff1e1e]/5 to-[#ff1e1e]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            <div className="relative z-10 code-font text-3xl sm:text-4xl font-bold text-white group-hover:text-[#ff1e1e] group-hover:drop-shadow-[0_0_10px_rgba(255,30,30,0.8)] transition-all duration-300">
-              {value.toString().padStart(2, '0')}
-            </div>
-            <div className="relative z-10 code-font mt-1 sm:mt-2 text-[0.65rem] sm:text-xs uppercase tracking-[0.2em] text-[#bdbdbd] group-hover:text-white transition-colors duration-300">
-              {unit}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -94,7 +42,7 @@ export default function Hero() {
   const parallaxY2 = useTransform(mouseY, [-1, 1], [30, -30]);
 
   return (
-    <section ref={containerRef} id="home" className="relative flex min-h-[90vh] sm:min-h-screen items-center justify-center overflow-hidden px-4 pb-16 pt-24 sm:px-8 sm:pb-20 sm:pt-32">
+    <section ref={containerRef} id="home" className="relative flex min-h-[85vh] sm:min-h-screen items-center justify-center overflow-hidden px-4 pb-16 pt-24 sm:px-8 sm:pb-20 sm:pt-32">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div
           style={{ x: parallaxX1, y: parallaxY1 }}
@@ -116,7 +64,7 @@ export default function Hero() {
         animate="visible"
         className="section-inner relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center"
       >
-        {/* Prominent Live Registration Badge */}
+        {/* Status Badge: Registrations Closed & Problem Statements Live */}
         <motion.div 
           variants={itemVariants} 
           className="eyebrow mb-4 sm:mb-6 inline-flex items-center gap-2.5 text-xs sm:text-sm border-[#ff1e1e]/40 bg-[#ff1e1e]/15 text-white font-bold px-5 py-2 rounded-full shadow-[0_0_25px_rgba(255,30,30,0.35)]"
@@ -125,8 +73,8 @@ export default function Hero() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff1e1e] opacity-90"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-[#ff1e1e] border-2 border-black"></span>
           </span>
-          <Sparkles size={16} className="text-[#ff1e1e]" />
-          <span>REGISTRATIONS ARE LIVE ON UNSTOP</span>
+          <FileText size={15} className="text-[#ff1e1e]" />
+          <span>PROBLEM STATEMENTS RELEASED &bull; REGISTRATIONS ARE CLOSED</span>
         </motion.div>
         
         <h1 className="text-[clamp(2.25rem,7vw,6.5rem)] font-black uppercase leading-[0.95] tracking-tight mb-6 sm:mb-8 perspective-[1000px] w-full">
@@ -149,14 +97,11 @@ export default function Hero() {
           </span>
         </motion.div>
 
+        {/* Action Buttons */}
         <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-12 sm:mb-16 w-full sm:w-auto px-4 sm:px-0">
-          <motion.a 
-            href={HACKATHON_CONFIG.registrationUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="magnetic-button primary-button w-full sm:w-auto min-w-[220px] group overflow-hidden shadow-[0_0_30px_rgba(255,30,30,0.4)]"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Link 
+            href="/tracks#problem-statements" 
+            className="magnetic-button primary-button w-full sm:w-auto min-w-[240px] group overflow-hidden shadow-[0_0_30px_rgba(255,30,30,0.4)]"
           >
             <motion.div 
               className="absolute inset-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg]"
@@ -164,7 +109,8 @@ export default function Hero() {
               transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 2 }}
             />
             <span className="relative z-10 flex items-center justify-center gap-2 font-bold">
-              Register Now (Live)
+              <FileText size={18} />
+              View Problem Statements
               <motion.span
                 className="inline-block"
                 initial={{ x: 0 }}
@@ -174,15 +120,17 @@ export default function Hero() {
                 <ArrowRight size={18} />
               </motion.span>
             </span>
-          </motion.a>
+          </Link>
           <Link 
             href="/rulebook" 
-            className="magnetic-button secondary-button w-full sm:w-auto min-w-[200px] text-center"
+            className="magnetic-button secondary-button w-full sm:w-auto min-w-[200px] text-center flex items-center justify-center gap-2"
           >
-            View Rulebook
+            <BookOpen size={18} />
+            Official Rulebook
           </Link>
         </motion.div>
 
+        {/* Hackathon Stats */}
         <motion.div variants={itemVariants} className="w-full max-w-3xl border-t border-[#ff1e1e]/20 pt-8 sm:pt-10 mt-4 sm:mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {HACKATHON_CONFIG.stats.map((stat, idx) => (
             <motion.div 
@@ -194,10 +142,6 @@ export default function Hero() {
               <div className="mt-1 sm:mt-2 text-[0.65rem] sm:text-xs uppercase tracking-widest text-[#bdbdbd]">{stat.label}</div>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="w-full max-w-2xl px-2">
-          <Countdown />
         </motion.div>
       </motion.div>
     </section>

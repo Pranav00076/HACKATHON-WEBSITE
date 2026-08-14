@@ -21,14 +21,14 @@ export interface PartnerItem {
 export const HACKATHON_CONFIG = {
   name: "Omnikon",
   tagline: "Build The Impossible",
-  subTagline: "🔴 REGISTRATIONS ARE LIVE ON UNSTOP",
-  registrationStatus: "LIVE",
-  description: "Turn less than 1 month of coding into a product that matters. Registrations are officially open on Unstop. If you're a builder, designer, or creator with ideas, this is your arena.",
+  subTagline: "⚡ PROBLEM STATEMENTS RELEASED // REGISTRATIONS CLOSED",
+  registrationStatus: "CLOSED",
+  description: "Registrations are now officially closed and problem statements are released. Teams are actively building their solutions across all 5 innovation tracks.",
   registrationUrl: "https://unstop.com/p/omnikon-national-hackathon-2026-omnikon-1715716",
+  problemStatementsPdfUrl: "https://drive.google.com/file/d/1ABXX8rxts63tgmOXTjz-_Ilo8xqCMWyf/view?usp=sharing",
   dates: {
     start: "Aug 15, 2026",
     end: "Sep 5, 2026",
-    targetIso: "2026-08-15T23:59:59+05:30",
     display: "Aug 15 - Sep 5, 2026",
   },
   location: "Online on Unstop",
